@@ -53,7 +53,7 @@ array (since all existing elements in the return array are less than all
 remaining elements in the two input arrays) until there are no elements left
 from the inputs.
 
-### GettingFunky: BogoMergeSort
+### Getting funky: BogoMergeSort
 
 Here is some pseudocode for BogoMergeSort
 
@@ -77,7 +77,7 @@ shuffles. Where upon one "run" the chance for bogosort to complete is $1/n!$,
 it is $P(n)$ for BMSort where
 ```math
 \begin{align*}
-    P : \mathbb N &\to \mathbb N \\
+    P : \mathbb N &\to \mathbb R \\
     0 &\mapsto 1 \\
     1 &\mapsto 1 \\
     n &\mapsto \frac1{n!}
