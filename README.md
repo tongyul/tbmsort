@@ -11,6 +11,8 @@ Fun fact 2: TBMSort is multithreaded AND *slower* than BogoSort.
 
 ## What is TBMSort
 
+### Context: BogoSort
+
 Here is some pseudocode for bogosort
 
 ```
@@ -23,6 +25,8 @@ fn bogosort(rng, arr)
 ```
 
 (You can't just ignore the random number generator.)
+
+### Context: MergeSort
 
 Here is some pseudocode for mergesort
 
@@ -49,6 +53,8 @@ array (since all existing elements in the return array are less than all
 remaining elements in the two input arrays) until there are no elements left
 from the inputs.
 
+### GettingFunky: BogoMergeSort
+
 Here is some pseudocode for BogoMergeSort
 
 ```
@@ -65,6 +71,25 @@ fn bmsort(rng, arr)
         else
             bmsort(rng, maybe_result)
 ```
+
+As you can see, it is basically bogosort, except it redoes all lower-level
+shuffles. Where upon one "run" the chance for bogosort to complete is $1/n!$,
+it is $P(n)$ for BMSort where
+$$
+\begin{align*}
+    P : \mathbb N &\to \mathbb N \\
+    0 &\mapsto 1 \\
+    1 &\mapsto 1 \\
+    n &\mapsto \frac1{n!}
+        \cdot P\left(\left\lceil\frac n2\right\rceil\right)
+        \cdot P\left(\left\lfloor\frac n2\right\rfloor\right)
+\end{align*}
+$$
+
+TBMSort is the threaded version of BogoMergeSort, performing the
+divide-and-conquer in parallel with threads. For every recursion in the D&C, it
+spawns a new thread and uses the thread-local RNG provided by the `rand` crate.
+The end result is that it makes full use of your CPU *while being slow*.
 
 ## CLI
 
